@@ -27,6 +27,11 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
+// ADD THIS CONSOLE LOG
+console.log('Firebase Client Config being used:', firebaseConfig);
+console.log('API Key length:', firebaseConfig.apiKey ? firebaseConfig.apiKey.length : 'N/A');
+// END ADDITION
+
 let appInstance: FirebaseApp | null = null;
 let authInstance: Auth | null = null;
 let dbInstance: Firestore | null = null;

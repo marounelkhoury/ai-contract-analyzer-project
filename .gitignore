@@ -4,8 +4,7 @@ npm-debug.log*
 
 # Environment variables
 .env
-.env.*
-
+client/.env
 # Uploads folder
 server/uploads/*
 !server/uploads/.gitkeep

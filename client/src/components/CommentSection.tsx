@@ -3,17 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { Socket } from 'socket.io-client';
 
-// CORRECTED IMPORTS FOR FIREBASE MODULAR SDK (from previous fix)
-// Runtime functions:
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
-
-// Type-only imports (using 'type' keyword):
-import type { FirebaseApp } from 'firebase/app';
-import type { Auth } from 'firebase/auth';
-import type { Firestore } from 'firebase/firestore';
-import type { Timestamp } from 'firebase/firestore';
+// CORRECTED IMPORTS: Only import the necessary functions and types from firebase/firestore directly,
+// and import the initialized 'db' instance from your central firebase-client.ts.
+// NO LOCAL FIREBASE INITIALIZATION HERE.
+import { db } from '../firebase-client'; // Import the initialized db instance
+import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore'; // Import Firestore functions
+import type { Timestamp } from 'firebase/firestore'; // Import Timestamp type
 
 
 // Define the shape of a Comment object (client-side)
@@ -36,48 +31,11 @@ interface CommentSectionProps {
   highlightedText: string;
   selectionRange: { start: number; end: number } | null;
   clearSelection: () => void;
-  onCommentsUpdate: (comments: Comment[]) => void; // NEW PROP: Callback to pass comments back
+  onCommentsUpdate: (comments: Comment[]) => void; // Callback to pass comments back
 }
 
-// --- MANUAL FIREBASE CLIENT CONFIG (from previous fix) ---
-const firebaseConfig = {
-  apiKey: "REMOVED_FOR_SECURITY",
-  authDomain: "ai-contract-analyzer-5b904.firebaseapp.com",
-  projectId: "ai-contract-analyzer-5b904",
-  storageBucket: "ai-contract-analyzer-5b904.firebasestorage.app",
-  messagingSenderId: "528596256396",
-  appId: "1:528596256396:web:e45473a65ca694165b9da9",
-  measurementId: "G-Z83T1P2W0D"
-};
-
-let appInstance: FirebaseApp | null = null;
-let authInstance: Auth | null = null;
-let dbInstance: Firestore | null = null;
-
-if (!getApps().length) {
-  try {
-    appInstance = initializeApp(firebaseConfig);
-    console.log('✅ Firebase client app initialized successfully in CommentSection.tsx!');
-  } catch (e: any) {
-    console.error('❌ Failed to initialize Firebase app in CommentSection.tsx:', e);
-    appInstance = null;
-  }
-} else {
-  appInstance = getApp();
-  console.log('⚠️ Firebase client app already initialized. Re-using existing instance in CommentSection.tsx.');
-}
-
-if (appInstance) {
-  authInstance = getAuth(appInstance);
-  dbInstance = getFirestore(appInstance);
-} else {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  authInstance = null;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  dbInstance = null;
-}
-// --- END Firebase Client Init ---
-
+// REMOVED: All local Firebase configuration and initialization (firebaseConfig, appInstance, authInstance, dbInstance, initializeApp, getApps, getApp, getAuth, getFirestore calls)
+// These are now handled exclusively by client/src/firebase-client.ts
 
 const CommentSection: React.FC<CommentSectionProps> = ({
   contractId,
@@ -87,16 +45,19 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   highlightedText,
   selectionRange,
   clearSelection,
-  onCommentsUpdate // NEW: Destructure the new prop
+  onCommentsUpdate
 }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newCommentText, setNewCommentText] = useState<string>('');
   const [loadingComments, setLoadingComments] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const db = dbInstance;
+  // 'db' is now directly the imported instance from firebase-client.ts
+  // No need for 'const db = dbInstance;' as it's already imported as 'db'
 
+  // Firestore onSnapshot listener for real-time comments
   useEffect(() => {
+    // Check if db is valid and contractId is provided
     if (!db || !contractId) {
       setComments([]);
       setLoadingComments(false);
@@ -129,7 +90,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
         });
       });
       setComments(fetchedComments);
-      onCommentsUpdate(fetchedComments); // NEW: Call the callback to pass comments to parent
+      onCommentsUpdate(fetchedComments);
       setLoadingComments(false);
       console.log(`Comments updated for contract ${contractId}:`, fetchedComments.length);
     }, (err) => {
@@ -141,7 +102,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
     });
 
     return () => unsubscribe();
-  }, [contractId, db, onCommentsUpdate]); // Add onCommentsUpdate to dependencies
+  }, [contractId, db, onCommentsUpdate]);
 
   const handleAddComment = () => {
     if (newCommentText.trim() === '' || !socket || !contractId || !currentUserId) {
