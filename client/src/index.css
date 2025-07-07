@@ -1,0 +1,806 @@
+/* client/src/index.css - CONSOLIDATED AND CLEANED */
+
+/* Basic reset and global styling */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif; /* Using Inter as specified */
+  color: #343a40; /* Darker text for readability */
+  background-color: #f8f9fa; /* Light background */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6; /* Improved readability */
+}
+
+/* App Container for sticky footer layout */
+.App-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures it takes at least full viewport height */
+  overflow: hidden; /* Prevent horizontal scroll from internal elements if any */
+}
+
+/* Header Styles */
+.app-header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  flex-shrink: 0; /* Prevents header from shrinking */
+}
+
+.app-title {
+  font-size: 1.75rem; /* ~2xl */
+  font-weight: 700; /* bold */
+  color: #212529; /* dark gray */
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Space between items */
+}
+
+.user-display {
+  font-size: 0.95rem;
+  color: #495057;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  background-color: #e9ecef;
+  border-radius: 0.375rem;
+}
+
+.logout-button {
+  padding: 0.5rem 1rem;
+  background-color: #dc3545; /* Red for logout */
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+.back-button {
+  padding: 0.5rem 1rem;
+  background-color: #e9ecef; /* light gray */
+  color: #495057; /* dark text */
+  border: none;
+  border-radius: 0.375rem; /* rounded-md */
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #dee2e6; /* slightly darker gray on hover */
+}
+
+
+/* Main Content Layout */
+.main-content {
+  flex-grow: 1; /* Allows main content to fill remaining vertical space */
+  padding: 1.5rem;
+  display: flex; /* Using flex to manage horizontal panes */
+  justify-content: center;
+  align-items: flex-start; /* Align content to the top */
+  width: 100%; /* Ensure it takes full width */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.content-layout {
+  display: flex; /* Use flexbox for flexible pane sizing */
+  flex-direction: column; /* Default to column for small screens */
+  width: 100%; /* Ensure it spans the full width of main-content */
+  max-width: 1600px; /* Optional: cap max width for very large screens */
+  gap: 1.5rem; /* Space between panes */
+  align-items: stretch; /* Make panes equal height */
+  flex-grow: 1; /* Allows content layout to grow */
+}
+
+@media (min-width: 1024px) { /* Equivalent to Tailwind's 'lg' breakpoint */
+  .content-layout {
+    flex-direction: row; /* Two columns on large screens */
+  }
+}
+
+.pane {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08); /* Soft shadow */
+  border: 1px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Hide scrollbars if content doesn't fit within initial height */
+}
+
+.pdf-viewer-pane {
+  flex: 0.4; /* Takes 40% of the available width */
+  min-width: 400px; /* Minimum width for PDF viewer */
+}
+
+.ai-analysis-pane {
+  flex: 0.6; /* Takes 60% of the available width */
+  min-width: 500px; /* Minimum width for AI analysis pane */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Spacing between sections within the right pane */
+}
+
+/* Initial view layout (upload + saved contracts) */
+.initial-view-layout {
+  display: flex;
+  flex-direction: column; /* Default to column on small screens */
+  width: 100%;
+  max-width: 1200px; /* Max width for this layout */
+  gap: 1.5rem;
+  align-items: stretch;
+  flex-grow: 1;
+  padding-bottom: 2rem; /* Add some padding at bottom */
+}
+
+@media (min-width: 1024px) { /* On large screens */
+  .initial-view-layout {
+    flex-direction: row; /* Two columns */
+  }
+}
+
+.upload-pane, .saved-contracts-pane {
+  flex: 1; /* Both take equal width */
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
+  height: auto; /* Allow height to adjust */
+}
+
+.saved-contracts-pane {
+  min-height: 200px; /* Minimum height for consistency */
+}
+
+/* Footer styling */
+.app-footer {
+  background-color: #343a40; /* Dark gray */
+  color: #f8f9fa; /* Light text */
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  flex-shrink: 0; /* Prevents footer from shrinking */
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Section Titles */
+.section-title {
+  font-size: 1.5rem; /* ~xl */
+  font-weight: 600; /* semibold */
+  color: #212529;
+  margin-bottom: 1.25rem;
+  margin-top: 0;
+}
+
+.sub-section-title {
+  font-size: 1.125rem; /* ~lg */
+  font-weight: 500; /* medium */
+  color: #343a40;
+  margin-bottom: 0.75rem;
+  margin-top: 0;
+}
+
+/* Text Displays (Extracted Text, AI Results) */
+.text-display {
+  white-space: pre-wrap; /* Preserve whitespace and line breaks */
+  font-size: 0.875rem; /* ~sm */
+  line-height: 1.6;
+  padding: 0.75rem;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  background-color: #f8f9fa;
+  overflow-y: auto; /* Enable vertical scrolling */
+  flex-grow: 1; /* Allow text areas to fill available space */
+  margin-top: 0.5rem; /* Spacing below subtitle */
+}
+
+/* Ensure image within PDF Viewer is constrained */
+.pdf-viewer img {
+  max-width: 100%;
+  height: auto;
+  display: block; /* Remove extra space below image */
+}
+
+/* File Upload Component Styles */
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  min-height: calc(100vh - 8rem); /* Adjust based on header/footer */
+}
+
+.upload-card {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.dropzone-area {
+  border: 2px dashed #ced4da;
+  border-radius: 0.5rem;
+  padding: 3rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  background-color: #f8f9fa;
+}
+
+.dropzone-area.active {
+  border-color: #007bff; /* primary blue */
+  background-color: #e7f5ff; /* light blue background */
+}
+
+.dropzone-text {
+  font-size: 1.125rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+.selected-file-info {
+  color: #495057;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.file-name {
+  font-weight: 500;
+  color: #007bff;
+}
+
+/* Buttons */
+button { /* Base button style */
+  border-radius: 0.375rem;
+  border: 1px solid transparent;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #ffffff; /* Default text color for buttons */
+}
+
+button:hover:not(:disabled) {
+  opacity: 0.9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 2px auto -webkit-focus-ring-color;
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.button-group, .button-group-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Space between buttons */
+}
+@media (min-width: 600px) { /* Adjust for larger buttons */
+    .button-group-row {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center; /* Center buttons in a row */
+    }
+    .main-button, .action-button {
+      flex-grow: 1; /* Allow buttons to grow in row layout */
+    }
+}
+
+.main-button, .action-button {
+  width: 100%; /* Default to full width */
+}
+
+.select-file-button {
+  background-color: #6f42c1; /* purple */
+}
+.select-file-button:hover:not(:disabled) {
+  background-color: #5f36a5;
+}
+
+.upload-button {
+  background-color: #28a745; /* green */
+}
+.upload-button:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.summary-button {
+  background-color: #6f42c1; /* purple */
+}
+.summary-button:hover:not(:disabled) {
+  background-color: #5f36a5;
+}
+
+.clauses-button {
+  background-color: #fd7e14; /* orange */
+}
+.clauses-button:hover:not(:disabled) {
+  background-color: #e66b0d;
+}
+
+.custom-analysis-button {
+  background-color: #007bff; /* blue */
+}
+.custom-analysis-button:hover:not(:disabled) {
+  background-color: #0069d9;
+}
+
+/* Custom Prompt Area */
+.custom-prompt-area {
+  margin-top: 1.5rem;
+}
+
+.input-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #343a40;
+  margin-bottom: 0.5rem;
+}
+
+.custom-textarea-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+  font-size: 1rem;
+  color: #495057;
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 4rem; /* Minimum height */
+  box-sizing: border-box; /* Include padding in width */
+}
+
+.custom-textarea-input:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.custom-textarea-input:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+/* Messages */
+.message-display, .ai-status-message {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.message-display.success, .ai-status-message.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.message-display.error, .ai-status-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.placeholder-text {
+  color: #6c757d;
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid rgba(111, 66, 193, 0.2); /* light purple */
+  border-top-color: #6f42c1; /* purple */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Custom Scrollbar */
+.custom-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #888 #f1f1f1; /* Firefox */
+}
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Comment Section Styles */
+.comment-section-wrapper {
+  margin-top: 1.5rem; /* Space above comments */
+  padding-top: 1.5rem;
+  border-top: 1px solid #e9ecef; /* Separator line */
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-section-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Fill available space */
+}
+
+.comments-list {
+  flex-grow: 1; /* Allow comments list to take available height */
+  overflow-y: auto; /* Enable scrolling for long lists */
+  padding-right: 0.5rem; /* Space for scrollbar */
+  margin-bottom: 1rem;
+}
+
+.comment-item {
+  background-color: #f1f3f5; /* Light gray background for comments */
+  border-radius: 0.375rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem; /* text-sm */
+}
+
+.comment-user-name {
+  font-weight: 600; /* semibold */
+  color: #007bff; /* Primary blue for user name */
+}
+
+.comment-timestamp {
+  color: #6c757d; /* Muted text for timestamp */
+  font-size: 0.75rem; /* text-xs */
+}
+
+.comment-text {
+  font-size: 0.95rem; /* Slightly larger for main comment text */
+  color: #343a40;
+  margin-bottom: 0.5rem;
+  white-space: pre-wrap; /* Preserve line breaks */
+}
+
+.comment-highlight-info {
+  background-color: #ffe066; /* Light yellow for highlights */
+  border-left: 3px solid #ffc107; /* Yellow border */
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  color: #343a40;
+  border-radius: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.add-comment-area {
+  margin-top: auto; /* Pushes input area to the bottom of its container */
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.comment-textarea-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+  font-size: 1rem;
+  color: #495057;
+  resize: vertical;
+  min-height: 4rem;
+  margin-bottom: 0.75rem;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+.comment-textarea-input:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.comment-textarea-input:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.add-comment-button {
+  background-color: #007bff; /* Primary blue */
+}
+.add-comment-button:hover:not(.disabled) {
+  background-color: #0069d9;
+}
+
+/* Initial View Layout (FileUpload and Saved Contracts List) */
+.initial-view-layout {
+  display: flex;
+  flex-direction: column; /* Default to column on small screens */
+  gap: 1.5rem; /* Equivalent to gap-6 */
+  flex-grow: 1;
+  padding-bottom: 2rem; /* Add some padding at bottom */
+}
+
+@media (min-width: 1024px) { /* On large screens */
+  .initial-view-layout {
+    flex-direction: row; /* Two columns */
+  }
+}
+
+/* Auth Page Styles */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1; /* Allows it to take full height */
+  padding: 2rem;
+  background-color: #f0f2f5;
+}
+
+.auth-card {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.auth-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.auth-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1.5rem;
+}
+
+.auth-button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.auth-button:disabled {
+  background-color: #a0cbed;
+  cursor: not-allowed;
+}
+
+.auth-toggle-message {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 1.5rem;
+}
+
+.auth-toggle-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.auth-toggle-button:hover {
+  color: #0056b3;
+}
+
+/* General message styles for auth page */
+.message-display.success-text {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+}
+.message-display.error-text {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+}
+
+
+/* Loading Screen State */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  color: #6c757d;
+}
+
+/* Highlight Preview Box */
+.highlight-preview-box {
+  background-color: #fff3cd; /* Light yellow background */
+  border: 1px solid #ffeeba;
+  border-radius: 0.375rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #664d03;
+}
+
+.highlight-preview-text {
+  margin: 0;
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Keep it on one line for preview */
+  flex-grow: 1;
+}
+
+.clear-highlight-button {
+  background-color: #f0ad4e; /* Orange for clear */
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  flex-shrink: 0; /* Prevent it from shrinking */
+}
+
+.clear-highlight-button:hover {
+  background-color: #ec971f;
+}
+
+/* For displaying the highlight within a comment */
+.comment-highlight-info {
+  background-color: #e2f0cb; /* Light green background */
+  border-left: 3px solid #82d10c;
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #38620b;
+  border-radius: 0.25rem;
+}
+
+.comment-highlight-info strong {
+  color: #2b4907;
+  font-weight: 600;
+}
+
+/* Style for the dynamically added text highlights */
+.text-highlight {
+  background-color: rgba(255, 255, 0, 0.4); /* Semi-transparent yellow */
+  border-bottom: 1px dashed #cccc00; /* Optional: adds a subtle underline */
+  cursor: help; /* Indicates it's interactive */
+  padding: 0 2px; /* Small padding for visual separation */
+  border-radius: 3px;
+}
+
+.load-contract-button {
+  background-color: #f8f9fa; /* Light background */
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem; /* Space between name and date */
+  color: #495057; /* ADDED: Ensure button text has a base dark color */
+}
+
+.load-contract-button:hover {
+  background-color: #e9ecef; /* Darker on hover */
+  border-color: #adb5bd;
+}
+
+.contract-name {
+  font-weight: 500;
+  color: #343a40; /* CHANGED: Darker color for better readability */
+  flex-grow: 1; /* Allow name to take available space */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upload-date {
+  font-size: 0.8rem;
+  color: #6c757d; /* Kept this color, it's usually fine for secondary info */
+  flex-shrink: 0; /* Prevent date from shrinking */
+}
