@@ -21,5 +21,3 @@ exports.getCommentsForContract = async (req, res) => {
     }
 };
 
-// No addComment function here as adding is primarily handled via Socket.IO directly in server.js
-// and uses firestoreService.addComment directly.

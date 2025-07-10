@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { auth } from '../firebase-client'; // Import Firebase auth instance
-import type { FirebaseUser } from '../firebase-client'; // CORRECTED: Import FirebaseUser as a type
+import type { FirebaseUser } from '../firebase-client'; 
 import { signInWithEmailAndPassword, signInWithCustomToken } from 'firebase/auth';
 
 interface AuthPageProps {

@@ -2,10 +2,6 @@
 
 const geminiService = require('../services/geminiService');
 
-/**
- * Handles the request to analyze contract text using the Gemini AI model.
- * Expects { text: string, type: 'summary' | 'clauses' | 'custom', prompt?: string } in req.body
- */
 exports.analyzeContract = async (req, res) => {
     const { text, type, prompt } = req.body;
 

@@ -3,10 +3,6 @@
 import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
-// THIS IS THE FINAL, MOST ROBUST WAY TO SET THE WORKER SRC.
-// It directly points to the file we manually placed in the /public folder,
-// which Vite serves directly from the root path.
-// This file is guaranteed to match the version of react-pdf you have installed.
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
 
 interface PdfViewerProps {

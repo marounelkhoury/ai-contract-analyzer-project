@@ -6,7 +6,6 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: path.resolve(__dirname, '../../.env') }); // Load .env for FIREBASE_PROJECT_ID
 
-// Ensure you have downloaded your Firebase service account key and placed it in the server directory
 const serviceAccountFileName = 'firebase-service-account.json'; // Ensure this matches your file name
 const serviceAccountPath = path.resolve(__dirname, '../', serviceAccountFileName);
 
@@ -30,7 +29,6 @@ try {
     } else if (error instanceof SyntaxError) {
         console.error('HINT: The JSON file might be malformed. Check for syntax errors.');
     }
-    // DO NOT process.exit(1) yet, let it continue to see if something else breaks
 }
 
 // Initialize Firebase Admin SDK

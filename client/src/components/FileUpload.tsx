@@ -4,7 +4,6 @@ import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 
-// Rename this interface to UploadedFileDetails for consistency with App.tsx
 interface UploadedFileDetails { // CHANGED from UploadedFile
   _id: string;
   filename: string;
@@ -17,8 +16,7 @@ interface UploadedFileDetails { // CHANGED from UploadedFile
 }
 
 interface FileUploadProps {
-  // Now, onUploadSuccess will only pass the full uploadedFileDetails object
-  // as extractedText is already inside it.
+
   onUploadSuccess: (fileUrl: string, uploadedFileDetails: UploadedFileDetails) => void;
 }
 
@@ -60,7 +58,6 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess }) => {
         success: boolean;
         message?: string; // Still allow message for errors
         file?: UploadedFileDetails; // Now uses the correct UploadedFileDetails
-        // extractedText?: string; // Removed, as it's part of 'file' (UploadedFileDetails)
       }>(
         'http://localhost:5000/api/files/upload',
         formData,

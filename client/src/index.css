@@ -1,4 +1,4 @@
-/* client/src/index.css - CONSOLIDATED AND CLEANED */
+/* client/src/index.css */
 
 /* Basic reset and global styling */
 html, body, #root {
@@ -792,7 +792,7 @@ button:disabled {
 
 .contract-name {
   font-weight: 500;
-  color: #343a40; /* CHANGED: Darker color for better readability */
+  color: #343a40;
   flex-grow: 1; /* Allow name to take available space */
   overflow: hidden;
   text-overflow: ellipsis;

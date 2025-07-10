@@ -9,10 +9,10 @@ const { Server } = require('socket.io');
 
 // Import routes
 const fileRoutes = require('./routes/fileRoutes');
-const aiRoutes = require('./routes/aiRoutes'); // Fix: This line might have a typo, should be 'require'
+const aiRoutes = require('./routes/aiRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const contractRoutes = require('./routes/contractRoutes');
-const authRoutes = require('./routes/authRoutes'); // ADD THIS LINE
+const authRoutes = require('./routes/authRoutes');
 
 // Import services
 const firestoreService = require('./services/firestoreService');

@@ -3,9 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { Socket } from 'socket.io-client';
 
-// CORRECTED IMPORTS: Only import the necessary functions and types from firebase/firestore directly,
-// and import the initialized 'db' instance from your central firebase-client.ts.
-// NO LOCAL FIREBASE INITIALIZATION HERE.
 import { db } from '../firebase-client'; // Import the initialized db instance
 import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore'; // Import Firestore functions
 import type { Timestamp } from 'firebase/firestore'; // Import Timestamp type
@@ -34,9 +31,6 @@ interface CommentSectionProps {
   onCommentsUpdate: (comments: Comment[]) => void; // Callback to pass comments back
 }
 
-// REMOVED: All local Firebase configuration and initialization (firebaseConfig, appInstance, authInstance, dbInstance, initializeApp, getApps, getApp, getAuth, getFirestore calls)
-// These are now handled exclusively by client/src/firebase-client.ts
-
 const CommentSection: React.FC<CommentSectionProps> = ({
   contractId,
   socket,
@@ -51,9 +45,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   const [newCommentText, setNewCommentText] = useState<string>('');
   const [loadingComments, setLoadingComments] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-  // 'db' is now directly the imported instance from firebase-client.ts
-  // No need for 'const db = dbInstance;' as it's already imported as 'db'
 
   // Firestore onSnapshot listener for real-time comments
   useEffect(() => {

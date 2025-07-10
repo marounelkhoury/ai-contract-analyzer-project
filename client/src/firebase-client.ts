@@ -13,10 +13,6 @@ import type { User as FirebaseUserType } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import type { Firestore } from 'firebase/firestore';
 
-
-// Manually provided firebaseConfig (as Canvas globals are not reliably injected)
-// MAKE SURE THIS MATCHES THE firebaseConfig YOU PASTED INTO CommentSection.tsx
-
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -27,10 +23,10 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-// ADD THIS CONSOLE LOG
+
 console.log('Firebase Client Config being used:', firebaseConfig);
 console.log('API Key length:', firebaseConfig.apiKey ? firebaseConfig.apiKey.length : 'N/A');
-// END ADDITION
+
 
 let appInstance: FirebaseApp | null = null;
 let authInstance: Auth | null = null;

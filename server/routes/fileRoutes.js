@@ -9,6 +9,4 @@ const fileController = require('../controllers/fileController');
 // from our fileController.
 router.post('/upload', fileController.uploadFile);
 
-// You can add more file-related routes here in the future, e.g., for downloading files
-
 module.exports = router; // Export the router so it can be used in server.js

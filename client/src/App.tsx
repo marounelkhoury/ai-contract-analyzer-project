@@ -12,7 +12,6 @@ import { auth } from './firebase-client';
 import type { FirebaseUser } from './firebase-client';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
-// Define the Comment interface consistently for App.tsx as well
 interface Comment {
   id: string; // Document ID from Firestore
   contractId: string;
@@ -56,7 +55,6 @@ const App: React.FC = () => {
   const [selectionRange, setSelectionRange] = useState<{ start: number; end: number } | null>(null);
   const textDisplayRef = useRef<HTMLDivElement>(null);
 
-  // NEW: State to hold comments for highlighting
   const [commentsForHighlights, setCommentsForHighlights] = useState<Comment[]>([]);
 
 
@@ -307,7 +305,6 @@ const App: React.FC = () => {
     setSelectionRange(null);
   };
 
-  // NEW: Function to render the extracted text with highlights
   const renderHighlightedText = () => {
     if (!extractedText) {
       return <p className="placeholder-text">No text extracted.</p>;
